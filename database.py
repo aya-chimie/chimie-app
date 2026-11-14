@@ -1,4 +1,6 @@
+
 import os
+import ssl
 import pymysql
 from dotenv import load_dotenv
 
@@ -12,7 +14,10 @@ def get_connection():
         password=os.getenv("DB_PASSWORD"),
         database=os.getenv("DB_NAME"),
         charset="utf8mb4",
-        cursorclass=pymysql.cursors.DictCursor
+        cursorclass=pymysql.cursors.DictCursor,
+        ssl=ssl.create_default_context(),
+        ssl_verify_cert=True,
+        ssl_verify_identity=True
     )
 
     return connection
