@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Espace administratrice</h1>
+
+        <p class="success">
+            {{ request.query_params.get('message', '') }}
+        </p>
+
+        <h2>Créer un utilisateur</h2>
+
+        <form action="/admin/create-user" method="post">
+
+            <label>Nom d'utilisateur :</label>
+            <input type="text" name="username"
+                   placeholder="Entrez le nom d'utilisateur" required>
+
+            <label>Mot de passe (8 caractères minimum) :</label>
+            <input type="password" name="password"
+                   placeholder="Entrez le mot de passe"
+                   minlength="8" required>
+
+            <button type="submit">Créer l'utilisateur</button>
+
+        </form>
+
+        <hr>
+
+        <h2>Liste des utilisateurs</h2>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Rôle</th>
+                <th>Statut</th>
+                <th>Action</th>
+            </tr>
+
+            {% for user in utilisateurs %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.role }}</td>
+                <td>
+                    {% if user.is_active %}
+                        Actif
+                    {% else %}
+                        Bloqué
+                    {% endif %}
+                </td>
+                <td>
+                    {% if user.role == 'user' and not user.is_active %}
+                    <form action="/admin/reactiver/{{ user.id }}" method="post">
+                        <button type="submit">Réactiver</button>
+                    </form>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div style="text-align:center; margin-top:25px;">
+            <a href="/">Retour au calculateur</a>
+            <a href="/logout">Déconnexion</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

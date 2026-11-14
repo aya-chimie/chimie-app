@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultat du calcul</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Résultat du calcul</h1>
+
+        {% if erreur %}
+
+            <p class="error">Erreur : {{ erreur }}</p>
+
+        {% else %}
+
+            <h2>Quantité de matière calculée</h2>
+
+            <div style="background:#eaf3fc; padding:25px; border-radius:12px; text-align:center; margin:20px 0;">
+                <h1 style="margin:0; color:#2468a8;">
+                    {{ resultat }} mol
+                </h1>
+            </div>
+
+            <p><strong>Formule utilisée :</strong> {{ formule }}</p>
+
+        {% endif %}
+
+        <div style="text-align:center; margin-top:25px;">
+            <a href="/">Retour au calculateur</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

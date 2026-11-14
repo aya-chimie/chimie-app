@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur chimique</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Calculateur chimique</h1>
+
+        <p style="text-align:center; margin-bottom:25px;">
+            Calcul de la quantité de matière
+        </p>
+
+        <form action="/calculer" method="post">
+
+            <label>Choisir la méthode de calcul :</label>
+
+            <select name="methode" id="methode" onchange="afficherChamps()">
+                <option value="masse">À partir de la masse</option>
+                <option value="concentration">À partir de la concentration</option>
+                <option value="entites">À partir du nombre d'entités</option>
+            </select>
+
+            <div id="masse">
+                <h2>À partir de la masse</h2>
+
+                <label>Masse (g) :</label>
+                <input type="number" step="any" name="masse" placeholder="Exemple : 10" required>
+
+                <label>Masse molaire (g/mol) :</label>
+                <input type="number" step="any" name="masse_molaire" placeholder="Exemple : 18" required>
+            </div>
+
+            <div id="concentration" style="display:none">
+                <h2>À partir de la concentration</h2>
+
+                <label>Concentration (mol/L) :</label>
+                <input type="number" step="any" name="concentration" placeholder="Exemple : 2" disabled>
+
+                <label>Volume (L) :</label>
+                <input type="number" step="any" name="volume" placeholder="Exemple : 0.5" disabled>
+            </div>
+
+            <div id="entites" style="display:none">
+                <h2>À partir du nombre d'entités</h2>
+
+                <label>Nombre d'entités :</label>
+                <input type="number" step="any" name="nombre_entites" placeholder="Exemple : 6.022e23" disabled>
+            </div>
+
+            <button type="submit">Calculer</button>
+
+        </form>
+
+        <div style="text-align:center; margin-top:25px;">
+            <a href="/logout">Déconnexion</a>
+        </div>
+
+    </div>
+
+    <script>
+        function afficherChamps() {
+
+            let methode = document.getElementById("methode").value;
+
+            ["masse", "concentration", "entites"].forEach(function(id) {
+
+                let bloc = document.getElementById(id);
+
+                bloc.style.display = id === methode ? "block" : "none";
+
+                bloc.querySelectorAll("input").forEach(function(input) {
+                    input.disabled = id !== methode;
+                    input.required = id === methode;
+                });
+
+            });
+        }
+    </script>
+
+</body>
+</html>
