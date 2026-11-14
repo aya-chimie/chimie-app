@@ -2,3 +2,7 @@ fastapi
 uvicorn
 jinja2
 python-multipart
+pymysql
+python-dotenv
+itsdangerous
+pwdlib[argon2]
